@@ -1,4 +1,16 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Render } from "@nestjs/common";
 
-@Controller('main')
-export class MainController {}
+import {Config} from '../../../config/config.defult';
+import { Helper } from "../../../extend/helper";
+
+@Controller(`${Config.adminPath}/main`)
+export class MainController {
+
+  @Get()
+  @Render('admin/main')
+  index(){
+
+
+  }
+
+}

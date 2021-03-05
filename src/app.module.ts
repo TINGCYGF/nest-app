@@ -5,8 +5,10 @@ import { ApiModule } from './module/api/api.module';
 import { ToolsService } from './service/tools/tools.service';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { Config } from "./config/config.defult";
 //配置中间件
 import { AdminauthMiddleware } from "./middleware/adminauth.middleware";
+import { InitMiddleware } from "./middleware/init.middleware";
 
 @Module({
   imports: [AdminModule, DefaultModule, ApiModule,
@@ -23,6 +25,8 @@ export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AdminauthMiddleware)
-      .forRoutes('admin/*')
+      .forRoutes(`${Config.adminPath}/*`)//在admin下面生效
+      .apply(InitMiddleware)
+      .forRoutes('*') //全局中间件
   }
 }

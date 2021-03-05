@@ -1,8 +1,10 @@
 import { Controller, Get, Render, Request, Response, Post, Body } from '@nestjs/common';
 import { ToolsService } from '../../../service/tools/tools.service';
 import { AdminService } from '../../../service/admin/admin.service';
+import {Config} from '../../../config/config.defult';
 
-@Controller('admin/login')
+
+@Controller(`${Config.adminPath}/login`)
 export class LoginController {
 
   constructor(private toolsService: ToolsService, private adminService: AdminService) { }
@@ -13,7 +15,6 @@ export class LoginController {
     // console.log(await this.adminService.find());
     return {};
   }
-
   @Get('code')
   getCode(@Request() req, @Response() res) {
 
@@ -23,7 +24,6 @@ export class LoginController {
     res.type('image/svg+xml');
     res.send(svgCaptcha.data);
   }
-
   @Post('doLogin')
   async doLogin(@Body() body, @Request() req,@Response() res) {
     try {
@@ -31,20 +31,20 @@ export class LoginController {
       const username: string = body.username;
       let password: string = body.password;
       if (username == "" || password.length < 6) {
-        this.toolsService.error(res,"用户名或者密码不合法","/admin/login");
+        await this.toolsService.error(res,"用户名或者密码不合法","/admin/login");
       } else {
         if (code.toUpperCase() == req.session.code.toUpperCase()) {
           password = this.toolsService.getMd5(password);
-          var userResult = await this.adminService.find({ "username": username, "password": password });
+          let userResult = await this.adminService.find({ "username": username, "password": password });
           if (userResult.length > 0) {
             console.log('登录成功');
             req.session.userinfo=userResult[0];
-            this.toolsService.success(res,"/admin/main");
+            await this.toolsService.success(res,"/admin/main");
           } else {
-            this.toolsService.error(res,"用户名或者密码不正确","/admin/login");
+            await this.toolsService.error(res,"用户名或者密码不正确","/admin/login");
           }
         } else {
-          this.toolsService.error(res,"验证码不正确","/admin/login");
+          await this.toolsService.error(res,"验证码不正确","/admin/login");
         }
       }
     } catch (error) {
@@ -52,15 +52,9 @@ export class LoginController {
       res.redirect('/admin/login');
     }
   }
-
-
   @Get('loginOut')
-
   loginOut(@Request() req,@Response() res){
     req.session.userinfo=null;
     res.redirect('/admin/login');
-
   }
-
-
 }

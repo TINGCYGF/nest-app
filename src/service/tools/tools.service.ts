@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as svgCaptcha from 'svg-captcha';
-
 import * as md5 from 'md5';
 
 @Injectable()
 export class ToolsService {
-
   getCaptcha(){
     let captcha = svgCaptcha.create({
       size: 4,
@@ -30,5 +28,4 @@ export class ToolsService {
       redirectUrl:redirectUrl
     })
   }
-
 }

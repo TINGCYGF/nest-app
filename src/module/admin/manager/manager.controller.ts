@@ -1,6 +1,7 @@
 import {Controller, Get, Render} from '@nestjs/common';
 
-@Controller('admin/manager')
+import {Config} from '../../../config/config.defult';
+@Controller(`${Config.adminPath}/manager`)
 export class ManagerController {
 
   @Get()
