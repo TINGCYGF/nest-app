@@ -4,7 +4,6 @@ import { DefaultModule } from './module/defalut/default.module';
 import { ApiModule } from './module/api/api.module';
 import { ToolsService } from './service/tools/tools.service';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import { Config } from "./config/config.defult";
 //配置中间件
 import { AdminauthMiddleware } from "./middleware/adminauth.middleware";
