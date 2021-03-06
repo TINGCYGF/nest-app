@@ -7,7 +7,6 @@ import { AdminInterface } from "../../interface/admin.interface";
 export class AdminService {
   constructor(@InjectModel('Admin') private readonly adminModel) {}
 
-
   async find(json:AdminInterface={},fields?:string){
     try {
       return await this.adminModel.find(json,fields);
@@ -15,7 +14,6 @@ export class AdminService {
       return [];
     }
   }
-
   async add(json:AdminInterface){
     try {
       const admin = new this.adminModel(json);
@@ -24,7 +22,6 @@ export class AdminService {
       return null;
     }
   }
-
   async update(json1:AdminInterface,json2:AdminInterface){
     try {
       return await this.adminModel.updateOne(json1, json2);
@@ -32,7 +29,6 @@ export class AdminService {
       return null;
     }
   }
-
   async delete(json:AdminInterface){
     try {
       return await this.adminModel.deleteOne(json);
@@ -40,7 +36,6 @@ export class AdminService {
       return null;
     }
   }
-
   getModel(){
     return this.adminModel;
   }

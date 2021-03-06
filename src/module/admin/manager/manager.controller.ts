@@ -90,7 +90,6 @@ export class ManagerController {
       });
     }
     await this.toolsService.success(res, `/${Config.adminPath}/manager`);
-
   }
 
   @Get('delete')

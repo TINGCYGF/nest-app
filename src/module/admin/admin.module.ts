@@ -11,14 +11,18 @@ import { AdminService } from '../../service/admin/admin.service';
 import { RoleSchema } from "../../schema/role.schema";
 import { RoleService } from '../../service/role/role.service';
 import { RoleController } from './role/role.controller';
-
+import { AccessService } from "../../service/access/access.service";
+import { AccessSchema } from "../../schema/access.schema";
+import { AccessController } from './access/access.controller';
 
 @Module({
   imports:[
     MongooseModule.forFeature([
       { name: 'Admin', schema: AdminSchema,collection:"admin" },
-      { name: 'Role', schema: RoleSchema,collection:"role" }])],
-  controllers: [MainController, LoginController, ManagerController, RoleController],
-  providers: [ToolsService, AdminService, RoleService],
+      { name: 'Role', schema: RoleSchema,collection:"role" },
+      { name: 'Access', schema: AccessSchema,collection:"access"}
+])],
+  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController],
+  providers: [ToolsService, AdminService, RoleService, AccessService],
 })
 export class AdminModule {}
