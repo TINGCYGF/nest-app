@@ -2,9 +2,7 @@ import { Module } from '@nestjs/common';
 import { MainController } from './main/main.controller';
 import { LoginController } from './login/login.controller';
 import { ManagerController } from './manager/manager.controller';
-
 import { ToolsService } from '../../service/tools/tools.service';
-
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdminSchema } from '../../schema/admin.schema';
 import { AdminService } from '../../service/admin/admin.service';
@@ -25,6 +23,9 @@ import { GoodsTypeController } from './goods-type/goods-type.controller';
 import { GoodsTypeAttributeController } from './goods-type-attribute/goods-type-attribute.controller';
 import { GoodsTypeAttributeService } from "../../service/goods-type-attribute/goods-type-attribute.service";
 import { GoodsTypeAttributeSchema } from "../../schema/goods_type_attribute.schema";
+import { GoodsCateController } from './goods-cate/goods-cate.controller';
+import { GoodsCateSchema } from "../../schema/goods_cate.schema";
+import { GoodsCateService } from "../../service/goods-cate/goods-cate.service";
 
 @Module({
   imports:[
@@ -36,9 +37,10 @@ import { GoodsTypeAttributeSchema } from "../../schema/goods_type_attribute.sche
       { name: 'Focus', schema: FocusSchema,collection:"focus"},
       { name: 'GoodsType', schema: GoodsTypeSchema,collection:"goods_type"},
       { name: 'GoodsTypeAttribute', schema: GoodsTypeAttributeSchema,collection:"goods_type_attribute"},
+      { name: 'GoodsCate', schema: GoodsCateSchema,collection:"goods_cate"},
 
     ])],
-  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController, GoodsTypeAttributeController],
+  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController, GoodsTypeAttributeController, GoodsCateController],
   providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService, GoodsTypeAttributeService],
   exports: [AdminService, RoleService, AccessService, RoleAccessService],
 })

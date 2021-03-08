@@ -5,7 +5,6 @@ import { GoodsTypeService } from '../../../service/goods-type/goods-type.service
 import { ToolsService } from '../../../service/tools/tools.service';
 
 @Controller(`${Config.adminPath}/goodsTypeAttribute`)
-
 export class GoodsTypeAttributeController {
 
   constructor (private goodsTypeAttributeService:GoodsTypeAttributeService,private toolsService:ToolsService,private goodsTypeService:GoodsTypeService){}
