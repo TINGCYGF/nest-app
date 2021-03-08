@@ -13,7 +13,6 @@ export class FocusController {
   @Get()
   @Render('admin/focus/index')
   async index(){
-
     let result=await this.focusService.find();
     return {
       focusList:result
@@ -29,11 +28,8 @@ export class FocusController {
   @Post('doAdd')
   @UseInterceptors(FileInterceptor('focus_img'))
   async doAdd(@Body() body,@UploadedFile() file,@Response() res){
-
     console.log(body);
     console.log(file);
-
-
     let saveDir=this.toolsService.uploadFile(file);
     console.log(saveDir);
     await this.focusService.add(Object.assign(body,{

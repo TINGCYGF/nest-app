@@ -1,4 +1,4 @@
-import { Controller, Get, Render ,Request} from '@nestjs/common';
+import { Controller, Get, Query, Render, Request } from "@nestjs/common";
 import { Config } from '../../../config/config.defult';
 import { AccessService } from '../../../service/access/access.service';
 import { RoleAccessService } from '../../../service/role-access/role-access.service';
@@ -56,5 +56,66 @@ export class MainController {
   @Render('admin/main/welcome')
   welcome(){
     return {};
+  }
+
+  @Get('changeStatus')
+  async changeStatus(@Query() query) {
+
+    //1、获取要修改数据的id
+    //2、我们需要查询当前数据的状态
+    //3、修改状态   0 修改成 1    1修改成0
+    // var model='focusService';
+    const id = query.id;
+    const model = query.model + "Service";   //要操作的数据模型  也就修改的表 focus
+    const fields = query.fields;   //要修改的字段   status
+
+    let json;
+    const modelResult = await this[model].find({ "_id": id });
+
+    if(modelResult.length>0){
+      const tempFields = modelResult[0][fields];
+      tempFields===1?json={[fields]:0}:json={[fields]:1};   //es6的属性名表达式
+      await this[model].update({"_id":id},json);
+      return {
+        success:true,
+        message:'修改状态成功'
+      };
+
+    }else{
+      return {
+        success:false,
+        message:'传入参数错误'
+      };
+    }
+  }
+
+
+  //更新数量
+  @Get('editNum')
+  async editNum(@Query() query) {
+
+    const id = query.id; /*更新的 id*/
+    const model = query.model + "Service"; /*更新的model */
+    const fields = query.fields; /*更新的字段  如:sort */
+    const num = query.num; /*数量*/
+
+    const modelResult = await this[model].find({ "_id": id });
+
+    if(modelResult.length>0){
+      const json = {
+        [fields]: num
+      };
+      console.log(json);
+      await this[model].update({"_id":id},json);
+      return {
+        success:true,
+        message:'修改成功'
+      };
+    }else{
+      return {
+        success:false,
+        message:'传入参数错误'
+      };
+    }
   }
 }
