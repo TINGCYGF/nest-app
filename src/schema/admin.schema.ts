@@ -9,10 +9,13 @@ export const AdminSchema = new mongoose.Schema({
   email: { type: String  },
   status: { type: Number,default:1  },
   role_id: { type:Schema.Types.ObjectId },
-  add_time: {
-    type:Number,
+  add_time: {           
+    type:Number,        
     default: d.getTime()
   },
-  is_super: { type:Number }
+  is_super: { 
+    type:Number,
+    default:0
+  }
 });
 

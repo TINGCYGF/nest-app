@@ -19,6 +19,12 @@ import { RoleAccessService } from "../../service/role-access/role-access.service
 import { FocusController } from './focus/focus.controller';
 import { FocusService } from "../../service/focus/focus.service";
 import { FocusSchema } from "../../schema/focus.schema";
+import { GoodsTypeService } from "../../service/goods-type/goods-type.service";
+import { GoodsTypeSchema} from "../../schema/goods_type.schema";
+import { GoodsTypeController } from './goods-type/goods-type.controller';
+import { GoodsTypeAttributeController } from './goods-type-attribute/goods-type-attribute.controller';
+import { GoodsTypeAttributeService } from "../../service/goods-type-attribute/goods-type-attribute.service";
+import { GoodsTypeAttributeSchema } from "../../schema/goods_type_attribute.schema";
 
 @Module({
   imports:[
@@ -28,10 +34,12 @@ import { FocusSchema } from "../../schema/focus.schema";
       { name: 'Access', schema: AccessSchema,collection:"access"},
       { name: 'RoleAccess', schema: RoleAccessSchema,collection:"role_access"},
       { name: 'Focus', schema: FocusSchema,collection:"focus"},
+      { name: 'GoodsType', schema: GoodsTypeSchema,collection:"goods_type"},
+      { name: 'GoodsTypeAttribute', schema: GoodsTypeAttributeSchema,collection:"goods_type_attribute"},
 
     ])],
-  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController],
-  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService],
+  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController, GoodsTypeAttributeController],
+  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService, GoodsTypeAttributeService],
   exports: [AdminService, RoleService, AccessService, RoleAccessService],
 })
 export class AdminModule {}
