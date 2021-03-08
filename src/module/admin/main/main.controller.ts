@@ -51,6 +51,7 @@ export class MainController {
       asideList:result
     };
   }
+
   @Get('welcome')
   @Render('admin/main/welcome')
   welcome(){
