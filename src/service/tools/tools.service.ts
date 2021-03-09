@@ -84,9 +84,9 @@ export class ToolsService {
       if (err) throw err;
       lenna
         .resize(100, 100) // resize
-        .quality(90) // set JPEG quality
+        .quality(90) // 清晰度
         // .greyscale() // set greyscale
-        .write(target+"_100x100"+extname(target)); // save
+        .write(target+"_100x100"+extname(target)); // 写入文件
     });
   }
 }

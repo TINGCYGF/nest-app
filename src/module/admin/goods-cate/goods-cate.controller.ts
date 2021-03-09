@@ -47,7 +47,6 @@ export class GoodsCateController {
   @Post('doAdd')
   @UseInterceptors(FileInterceptor('cate_img'))
   async doAdd(@Body() body, @UploadedFile() file, @Response() res) {
-
     const pid = body.pid;
     let { saveDir, uploadDir } = this.toolsService.uploadFile(file);
     try {
@@ -71,7 +70,6 @@ export class GoodsCateController {
   @Get('edit')
   @Render('admin/goodsCate/edit')
   async edit(@Query() query) {
-
     //获取所有的以及分类
     try {
       const cateList = await this.goodsCateService.find({ "pid": "0" });
@@ -95,7 +93,7 @@ export class GoodsCateController {
     try {
 
       if (pid != 0) {
-        body.pid = mongoose.Types.ObjectId(pid);   //注意
+        body.pid = mongoose.Types.ObjectId(pid);   //注意变为_id类型
       }
 
       if (file) {
