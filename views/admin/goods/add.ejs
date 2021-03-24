@@ -3,7 +3,7 @@
 <!-- 富文本编辑器 -->
 <link href="/admin/wysiwyg-editor/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/admin/wysiwyg-editor/js/froala_editor.pkgd.min.js"></script>
-<script type="text/javascript" src="/admin/wysiwyg-editor/js/zh_cn.js"></script>
+
 
 <!-- 上传图片 -->
 <link rel="stylesheet" type="text/css" href="/admin/webuploader/css/webuploader.css">
@@ -188,12 +188,7 @@
     
     //富文本编辑器
     new FroalaEditor('#content', {
-         height: 300,
-         language: 'zh_cn',         
-        // toolbarButtons: [  ['bold', 'strikethrough', 'subscript', 'superscript', 'outdent', 'indent', 'clearFormatting', 'insertTable', 'html'] ,['undo', 'redo']],
-        // toolbarButtonsXS: [ ['bold', 'strikethrough', 'subscript', 'superscript', 'outdent', 'indent', 'clearFormatting', 'insertTable', 'html'] , ['undo', 'redo']],
-        imageUploadURL: '/<%=config.adminPath%>/goods/doImageUpload',
-
+        imageUploadURL: '/<%=config.adminPath%>/goods/doImageUpload',//配置上传连接
     });
 
     $(function(){
