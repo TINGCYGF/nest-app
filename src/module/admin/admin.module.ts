@@ -26,6 +26,15 @@ import { GoodsTypeAttributeSchema } from "../../schema/goods_type_attribute.sche
 import { GoodsCateController } from './goods-cate/goods-cate.controller';
 import { GoodsCateSchema } from "../../schema/goods_cate.schema";
 import { GoodsCateService } from "../../service/goods-cate/goods-cate.service";
+import { GoodsService } from "../../service/goods/goods.service";
+import { GoodsSchema } from "../../schema/goods.schema";
+import { GoodsController } from './goods/goods.controller';
+import { GoodsAttrService } from "../../service/goods-attr/goods-attr.service";
+import { GoodsColorService } from "../../service/goods-color/goods-color.service";
+import { GoodsImageService } from "../../service/goods-image/goods-image.service";
+import { GoodsAttrSchema } from "../../schema/goods_attr.schema";
+import { GoodsColorSchema } from "../../schema/goods_color.schema";
+import { GoodsImageSchema } from "../../schema/goods_image.schema";
 
 @Module({
   imports:[
@@ -38,10 +47,15 @@ import { GoodsCateService } from "../../service/goods-cate/goods-cate.service";
       { name: 'GoodsType', schema: GoodsTypeSchema,collection:"goods_type"},
       { name: 'GoodsTypeAttribute', schema: GoodsTypeAttributeSchema,collection:"goods_type_attribute"},
       { name: 'GoodsCate', schema: GoodsCateSchema,collection:"goods_cate"},
+      { name: 'Goods', schema: GoodsSchema,collection:"goods"},
+      { name: 'GoodsAttr', schema: GoodsAttrSchema,collection:"goods-attr"},
+      { name: 'GoodsColor', schema: GoodsColorSchema,collection:"goods-color"},
+      { name: 'GoodsImage', schema: GoodsImageSchema,collection:"goods-image"},
+
 
     ])],
-  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController, GoodsTypeAttributeController, GoodsCateController],
-  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService, GoodsTypeAttributeService],
-  exports: [AdminService, RoleService, AccessService, RoleAccessService],
+  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController, GoodsTypeAttributeController, GoodsCateController, GoodsController],
+  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService, GoodsTypeAttributeService, GoodsCateService, GoodsService, GoodsAttrService, GoodsImageService, GoodsColorService],
+  exports: [AdminService, RoleService, AccessService, RoleAccessService, GoodsCateService, GoodsService, GoodsAttrService, GoodsImageService, GoodsColorService],
 })
 export class AdminModule {}
