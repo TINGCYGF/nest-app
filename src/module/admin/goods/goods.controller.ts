@@ -1,6 +1,6 @@
 import { Controller, Get, Render, Post, UseInterceptors, UploadedFile, Query, Body, Response ,Request} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Config } from "../../../config/config.defult";
+import { Config } from '../../../config/config.defult';
 import { GoodsService } from '../../../service/goods/goods.service';
 import { GoodsCateService } from '../../../service/goods-cate/goods-cate.service';
 import { GoodsColorService } from '../../../service/goods-color/goods-color.service';
@@ -114,6 +114,7 @@ export class GoodsController {
   @UseInterceptors(FileInterceptor('goods_img'))
   async doAdd(@Body() body, @UploadedFile() file, @Response() res) {
 
+    let i;
     let { saveDir,uploadDir } = await this.toolsService.uploadFile(file);
     //生成缩略图
     if(uploadDir){
@@ -123,14 +124,14 @@ export class GoodsController {
     if (body.goods_color && typeof (body.goods_color) !== 'string') {
       body.goods_color = body.goods_color.join(',');
     }
-    var result = await this.goodsService.add(Object.assign(body, {
+    const result = await this.goodsService.add(Object.assign(body, {
       goods_img: saveDir
     }));
 
     //2、增加图库
     let goods_image_list = body.goods_image_list;
     if (result._id && goods_image_list && typeof (goods_image_list) !== 'string') {
-      for (var i = 0; i < goods_image_list.length; i++) {
+      for (i = 0; i < goods_image_list.length; i++) {
         await this.goodsImageService.add({
           goods_id: result._id,
           img_url: goods_image_list[i]
@@ -142,7 +143,7 @@ export class GoodsController {
     let attr_value_list = body.attr_value_list;
     if (result._id && attr_id_list && typeof (attr_id_list) !== 'string') {
 
-      for (var i = 0; i < attr_id_list.length; i++) {
+      for (i = 0; i < attr_id_list.length; i++) {
         //获取当前 商品类型id对应的商品类型属性
         let goodsTypeAttributeResult = await this.goodsTypeAttributeService.find({ _id: attr_id_list[i] });
         await this.goodsAttrService.add({
@@ -156,9 +157,8 @@ export class GoodsController {
           attribute_value: attr_value_list[i],
         })
       }
-
     }
-    this.toolsService.success(res, `/${Config.adminPath}/goods`);
+    await this.toolsService.success(res, `/${Config.adminPath}/goods`);
 
   }
 
@@ -168,23 +168,17 @@ export class GoodsController {
 
     /*
     1、获取商品数据
-
     2、获取商品分类
-
     3、获取所有颜色 以及选中的颜色
-
     4、商品的图库信息
-
     5、获取商品类型
-
     6、获取规格信息
     */
-
 
     //获取上一页的地址  req.prevPage
 
     //1、获取商品数据
-    var goodsResult = await this.goodsService.find({ "_id": query.id });
+    const goodsResult = await this.goodsService.find({ "_id": query.id });
 
     console.log(goodsResult);
 
@@ -212,8 +206,8 @@ export class GoodsController {
     goodsColorResult = JSON.parse(JSON.stringify(goodsColorResult));
 
     if (goodsResult[0].goods_color) {
-      var tempColorArr = goodsResult[0].goods_color.split(',');
-      for (var i = 0; i < goodsColorResult.length; i++) {
+      const tempColorArr = goodsResult[0].goods_color.split(",");
+      for (let i = 0; i < goodsColorResult.length; i++) {
         if (tempColorArr.indexOf(goodsColorResult[i]._id.toString()) != -1) {
           goodsColorResult[i].checked = true;
         }
@@ -225,25 +219,18 @@ export class GoodsController {
 
 
     //4、商品的图库信息
-
     let goodsImageResult = await this.goodsImageService.find({ goods_id: goodsResult[0]._id });
-
 
     //5、获取商品类型
     let goodsTypeResult = await this.goodsTypeService.find({});
 
-
     //6、获取规格信息  商品类型属性
-
     let goodsAttrResult = await this.goodsAttrService.find({ goods_id: goodsResult[0]._id });
-
 
     let goodsAttrStr = '';
 
     goodsAttrResult.forEach(async val => {
-
       if (val.attribute_type == 1) {
-
         goodsAttrStr += `<li><span>${val.attribute_title}: 　</span><input type="hidden" name="attr_id_list" value="${val.attribute_id}" />  <input type="text" name="attr_value_list"  value="${val.attribute_value}" /></li>`;
       } else if (val.attribute_type == 2) {
         goodsAttrStr += `<li><span>${val.attribute_title}: 　</span><input type="hidden" name="attr_id_list" value="${val.attribute_id}" />  <textarea cols="50" rows="3" name="attr_value_list">${val.attribute_value}</textarea></li>`;
@@ -287,8 +274,6 @@ export class GoodsController {
       goodsAttr: goodsAttrStr,
       goodsImage: goodsImageResult,
       prevPage:req.prevPage  //上一页的地址
-
-
     }
   }
 
@@ -298,6 +283,7 @@ export class GoodsController {
   async doEdit(@Body() body, @UploadedFile() file, @Response() res) {
 
 
+let i;
 //0、获取edit传过来的上一页地址
     let prevPage=body.prevPage || `/${Config.adminPath}/goods`;
 
@@ -330,7 +316,7 @@ export class GoodsController {
 
     let goods_image_list = body.goods_image_list;
     if (goods_id && goods_image_list && typeof (goods_image_list) !== 'string') {
-      for (var i = 0; i < goods_image_list.length; i++) {
+      for (i = 0; i < goods_image_list.length; i++) {
         await this.goodsImageService.add({
           goods_id: goods_id,
           img_url: goods_image_list[i]
@@ -349,7 +335,7 @@ export class GoodsController {
     let attr_value_list = body.attr_value_list;
     if (goods_id && attr_id_list && typeof (attr_id_list) !== 'string') {
 
-      for (var i = 0; i < attr_id_list.length; i++) {
+      for (i = 0; i < attr_id_list.length; i++) {
         //获取当前 商品类型id对应的商品类型属性
         let goodsTypeAttributeResult = await this.goodsTypeAttributeService.find({ _id: attr_id_list[i] });
         await this.goodsAttrService.add({
@@ -361,10 +347,8 @@ export class GoodsController {
           attribute_value: attr_value_list[i],
         })
       }
-
     }
-    this.toolsService.success(res, prevPage);
-
+    await this.toolsService.success(res, prevPage);
   }
 
 
@@ -416,7 +400,7 @@ export class GoodsController {
     }
 
     let prevPage=req.prevPage ||  `/${Config.adminPath}/goods`;
-    this.toolsService.success(res, prevPage);
+    await this.toolsService.success(res, prevPage);
   }
 
 }
