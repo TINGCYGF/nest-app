@@ -5,7 +5,8 @@ import { AdminService } from "../service/admin/admin.service";
 @Injectable()
 export class AdminauthMiddleware implements NestMiddleware {
 
-  constructor(private adminService:AdminService){}
+  constructor(private readonly adminService:AdminService){}
+
   async use(req: any, res: any, next: () => void) {
     let pathname = req.baseUrl;  //获取访问的地址
     let userinfo = req.session.userinfo;
